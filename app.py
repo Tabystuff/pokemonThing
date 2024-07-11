@@ -1,4 +1,5 @@
 import requests
+import re
 
 pokeapi = "https://pokeapi.co/api/v2/"
 
@@ -12,4 +13,7 @@ resPokedex = requests.get(f"{pokeapi}{pokedexUrl}")
 
 print(res.url)
 print(resPokedex.url)
-print(resPokedex.json()["flavor_text_entries"][3]["flavor_text"]) 
+pokedexEntry = re.sub("[\n]"," ", resPokedex.json()["flavor_text_entries"][3]["flavor_text"] )
+
+
+print(pokedexEntry)
