@@ -1,5 +1,11 @@
 import requests
 import re
+import random
+
+# These are the english entries to the pokedex in the api. I use random.choice to pick one
+englishEntries = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,19,20,21,28,36,44,52,61,71,81,91,101,111,121,131,134]
+randomEntry = random.choice(englishEntries)
+
 
 pokeapi = "https://pokeapi.co/api/v2/"
 
@@ -13,7 +19,6 @@ resPokedex = requests.get(f"{pokeapi}{pokedexUrl}")
 
 print(res.url)
 print(resPokedex.url)
-pokedexEntry = re.sub("[\n\u000c]"," ", resPokedex.json()["flavor_text_entries"][3]["flavor_text"] )
-
+pokedexEntry = re.sub("[\n\u000c]"," ", resPokedex.json()["flavor_text_entries"][randomEntry]["flavor_text"] )
 
 print(pokedexEntry)
