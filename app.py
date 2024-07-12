@@ -16,7 +16,7 @@ randomEntry = random.choice(englishEntries)
 
 pokeapi = "https://pokeapi.co/api/v2/"
 
-pokemon = input("What pokemon do you wanna look up? ")
+pokemon = "haunter"
 pokemonUrl = f"pokemon/{pokemon}"
 pokedexUrl = f"pokemon-species/{pokemon}"
 
