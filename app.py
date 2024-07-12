@@ -1,6 +1,13 @@
 import requests
+from flask import Flask, render_template, request
 import re
 import random
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html", pokemonImg=pokemonImg, pokedexEntry=pokedexEntry)
 
 # These are the english entries to the pokedex in the api. I use random.choice to pick one
 englishEntries = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,19,20,21,28,36,44,52,61,71,81,91,101,111,121,131,134]
