@@ -13,12 +13,14 @@ pokemon = input("What pokemon do you wanna look up? ")
 pokemonUrl = f"pokemon/{pokemon}"
 pokedexUrl = f"pokemon-species/{pokemon}"
 
-res = requests.get(f"{pokeapi}{pokemonUrl}")
+resPokemon = requests.get(f"{pokeapi}{pokemonUrl}")
 resPokedex = requests.get(f"{pokeapi}{pokedexUrl}")
 
 
-print(res.url)
+print(resPokemon.url)
 print(resPokedex.url)
+pokemonImg = resPokemon.json()["sprites"]["front_default"]
 pokedexEntry = re.sub("[\n\u000c]"," ", resPokedex.json()["flavor_text_entries"][randomEntry]["flavor_text"] )
 
 print(pokedexEntry)
+print(pokemonImg)
