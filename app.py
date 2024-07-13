@@ -5,29 +5,27 @@ import random
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["GET","POST"] )
 def index():
-    return render_template("index.html", pokemonImg=pokemonImg, pokedexEntry=pokedexEntry)
+    pokeapi = "https://pokeapi.co/api/v2/"
 
-# These are the english entries to the pokedex in the api. I use random.choice to pick one
-englishEntries = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,19,20,21,28,36,44,52,61,71,81,91,101,111,121,131,134]
-randomEntry = random.choice(englishEntries)
+    pokemon = request.form.get("pokemon","haunter")
+    pokemonUrl = f"pokemon/{pokemon}"
+    pokedexUrl = f"pokemon-species/{pokemon}"
 
+    resPokemon = requests.get(f"{pokeapi}{pokemonUrl}")
+    resPokedex = requests.get(f"{pokeapi}{pokedexUrl}")
 
-pokeapi = "https://pokeapi.co/api/v2/"
+    # This randomly selects a
+    randomEntry = random.choice(range(0,135))
 
-pokemon = "haunter"
-pokemonUrl = f"pokemon/{pokemon}"
-pokedexUrl = f"pokemon-species/{pokemon}"
+    while resPokedex.json()["flavor_text_entries"][int(randomEntry)]["language"]["name"] != "en":
+        print(f"{randomEntry} from while top") 
+        print(resPokedex.json()["flavor_text_entries"][int(randomEntry)]["language"]["name"])
+        randomEntry = random.choice(range(0,135))
+        print(f"{randomEntry} from while bottom")
 
-resPokemon = requests.get(f"{pokeapi}{pokemonUrl}")
-resPokedex = requests.get(f"{pokeapi}{pokedexUrl}")
-
-
-print(resPokemon.url)
-print(resPokedex.url)
-pokemonImg = resPokemon.json()["sprites"]["front_default"]
-pokedexEntry = re.sub("[\n\u000c]"," ", resPokedex.json()["flavor_text_entries"][randomEntry]["flavor_text"] )
-
-print(pokedexEntry)
-print(pokemonImg)
+    print(f"{randomEntry} from outside while")
+    pokemonImg = resPokemon.json()["sprites"]["front_default"]
+    pokedexEntry = re.sub("[\n\u000c]"," ", resPokedex.json()["flavor_text_entries"][randomEntry]["flavor_text"] )
+    return render_template("index.html", pokemon=pokemon, pokemonImg=pokemonImg, pokedexEntry=pokedexEntry )
