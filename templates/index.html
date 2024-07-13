@@ -6,7 +6,11 @@
     <title>Who's that pokemon</title>
 </head>
 <body>
-    <img src="{{pokemonImg}}" alt="an image of a pokemon">
+    <img src={{pokemonImg}} alt="an image of a pokemon">
     <p>{{pokedexEntry}}</p>
+    <form action="/" method="post">
+        <input autocomplete="off" autofocus name="pokemon" placeholder="Search another pokemon" type="text">
+        <button type="submit">Search</button>
+    </form>
 </body>
 </html>
