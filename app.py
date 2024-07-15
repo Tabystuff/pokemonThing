@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     pokeapi = "https://pokeapi.co/api/v2/"
 
-    pokemon = request.form.get("pokemon","haunter")
+    pokemon = request.form.get("pokemon","ho-oh")
     pokemonUrl = f"pokemon/{pokemon}"
     pokedexUrl = f"pokemon-species/{pokemon}"
 
@@ -17,12 +17,13 @@ def index():
     resPokedex = requests.get(f"{pokeapi}{pokedexUrl}")
 
     # This randomly selects a
-    randomEntry = random.choice(range(0,135))
+    print(len(resPokedex.json()["flavor_text_entries"]))
+    randomEntry = random.choice(range(0,len(resPokedex.json()["flavor_text_entries"])))
 
     while resPokedex.json()["flavor_text_entries"][int(randomEntry)]["language"]["name"] != "en":
         print(f"{randomEntry} from while top") 
         print(resPokedex.json()["flavor_text_entries"][int(randomEntry)]["language"]["name"])
-        randomEntry = random.choice(range(0,135))
+        randomEntry = random.choice(range(0,len(resPokedex.json()["flavor_text_entries"])))
         print(f"{randomEntry} from while bottom")
 
     print(f"{randomEntry} from outside while")
